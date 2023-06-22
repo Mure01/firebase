@@ -1,0 +1,23 @@
+.naslov {
+  text-align: center;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+}
+
+.row {
+  padding: 5px 0;
+}
+
+.podaci {
+  height: 400px;
+  width: 400px;
+  background-color: cadetblue;
+}
+.text {
+  color:white;
+}
