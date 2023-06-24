@@ -3,17 +3,18 @@ import {useEffect, useState} from 'react'
 import { db } from './config/firebase';
 import { FaTrash, FaRegPaperPlane } from 'react-icons/fa';
 import {uid} from 'uid';
-import { set, ref, onValue, remove } from 'firebase/database';
+import { set, ref, onValue, remove, orderByChild } from 'firebase/database';
 function App() {
   //write
   
   const [todo, setTodo] = useState('');
   
   const writeToDatabase = () => {
-    const uuid = uid();
-    set(ref(db, `${uuid}`), {
+    const timestamp = new Date().getTime();
+    !todo ? alert('Morate unijete tekst'):
+    set(ref(db, `${timestamp}`), {
       todo: todo,
-      uuid: uuid,
+      timestamp: timestamp,
 
     })
     setTodo('');
@@ -22,7 +23,8 @@ function App() {
   //read from database
   const [todos, setTodos] = useState([]);
   useEffect(() => {
-    
+
+    orderByChild('timestamp')
     onValue(ref(db), (snapshot) => {
       setTodos([]);
       const data = snapshot.val();
@@ -38,7 +40,7 @@ function App() {
   //delete from database
 
   const handleDelete = (todo) => {
-    remove(ref(db, `/${todo.uuid}`))
+    remove(ref(db, `/${todo.timestamp}`))
   }
 
   return (
